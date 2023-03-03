@@ -22,21 +22,21 @@ final class WeatherTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-//    override func numberOfSections(in tableView: UITableView) -> Int {
-//        return 2
-//    }
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if section == 0 {
-//            return 1
-//        }
+        if section == 0 {
+            return 1
+        }
 
         return viewModel.dailyWeather.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        if indexPath.row == 0 {
+        if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "HourlyWeatherCell") as! HourlyWeatherTableViewCell
 
             cell.configure(with: viewModel.hourlyWeather)
@@ -46,7 +46,7 @@ final class WeatherTableViewController: UITableViewController {
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "DailyWeatherCell") as! DailyWeatherTableViewCell
-        let weather = viewModel.dailyWeather[indexPath.row - 1]
+        let weather = viewModel.dailyWeather[indexPath.row]
 
         cell.configure(with: weather)
         cell.selectionStyle = .none
@@ -56,16 +56,25 @@ final class WeatherTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 
-        if indexPath.row == 0 {
+        if indexPath.section == 0 {
             return 120
         }
         return 60
     }
 
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Hourly Weather"
+        }
+        return "10-days Forecast"
+    }
+
     private func setUpConstraints(for header: WeatherHeaderView) {
         NSLayoutConstraint.activate([
             header.widthAnchor.constraint(equalTo: view.widthAnchor),
-            header.heightAnchor.constraint(equalToConstant: 200)
+//            header.heightAnchor.constraint(equalToConstant: 300),
+//            header.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: 200),
+//            header.topAnchor.constraint(equalTo: tableView.topAnchor)
         ])
     }
 }
@@ -81,6 +90,7 @@ extension WeatherTableViewController: WeatherViewModelDelegate {
         header.translatesAutoresizingMaskIntoConstraints = false
         setUpConstraints(for: header)
         header.configure(with: viewModel.currentWeather)
+        view.addSubview(header)
         tableView.tableHeaderView = header
         tableView.reloadData()
     }
