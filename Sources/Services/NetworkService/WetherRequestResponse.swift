@@ -1,5 +1,7 @@
 import Foundation
 
+    // MARK: - Weather Request Response
+
 struct WeatherRequestResponse: Decodable {
     let location: UserLocation
     let currentWeather: CurrentWeather
@@ -12,6 +14,8 @@ struct WeatherRequestResponse: Decodable {
     }
 }
 
+    // MARK: - User Location
+
 struct UserLocation: Decodable {
     let city: String
 
@@ -19,6 +23,8 @@ struct UserLocation: Decodable {
         case city = "name"
     }
 }
+
+    // MARK: - Current Weather
 
 struct CurrentWeather: Decodable {
     let temperature: Float
@@ -30,6 +36,8 @@ struct CurrentWeather: Decodable {
     }
 }
 
+    // MARK: - Current Weather Description
+
 struct CurrentWeatherDescription: Decodable {
     let summary: String
     let image: String
@@ -40,6 +48,8 @@ struct CurrentWeatherDescription: Decodable {
     }
 }
 
+    // MARK: - Forecast Weather
+
 struct ForecastWeather: Decodable {
     let daily: [DailyWeather]
 
@@ -47,6 +57,8 @@ struct ForecastWeather: Decodable {
         case daily = "forecastday"
     }
 }
+
+    // MARK: - Daily Weather
 
 struct DailyWeather: Decodable {
     let date: String
@@ -60,6 +72,8 @@ struct DailyWeather: Decodable {
     }
 }
 
+    // MARK: - Hourly Weather
+
 struct HourlyWeather: Decodable {
     let hour: String
     let temperature: Float
@@ -72,6 +86,8 @@ struct HourlyWeather: Decodable {
     }
 }
 
+    // MARK: - Hourly Weather Description
+
 struct HourlyWeatherDescription: Decodable {
     let weatherImage: String
 
@@ -80,10 +96,12 @@ struct HourlyWeatherDescription: Decodable {
     }
 }
 
+    // MARK: - Day Details
+
 struct DayDetails: Decodable {
     let minTemp: Float
     let maxTemp: Float
-    let condition: DayConditiions
+    let condition: DayConditions
 
     enum CodingKeys: String, CodingKey {
         case minTemp = "mintemp_c"
@@ -92,7 +110,9 @@ struct DayDetails: Decodable {
     }
 }
 
-struct DayConditiions: Decodable {
+    // MARK: - Day Conditions
+
+struct DayConditions: Decodable {
     let weatherImage: String
 
     enum CodingKeys: String, CodingKey {

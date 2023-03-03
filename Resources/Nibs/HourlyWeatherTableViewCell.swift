@@ -6,11 +6,11 @@ final class HourlyWeatherTableViewCell: UITableViewCell, UICollectionViewDelegat
     
     @IBOutlet var collectionView: UICollectionView!
 
-    //MARK: Properties
+    // MARK: Properties
     
     private var hourlyModel: [HourlyWeather] = []
 
-    //MARK: - Lifecycle
+    // MARK: - Lifecycle
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,7 +23,7 @@ final class HourlyWeatherTableViewCell: UITableViewCell, UICollectionViewDelegat
         collectionView.contentInsetAdjustmentBehavior = .never
     }
 
-    //MARK:  - CollectionView Data Source
+    // MARK:  - CollectionView Data Source
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return hourlyModel.count
@@ -41,19 +41,7 @@ final class HourlyWeatherTableViewCell: UITableViewCell, UICollectionViewDelegat
     }
     
     func configure(with weather: [HourlyWeather]) {
-        let formatter = DateFormatter()
-        
-        formatter.dateFormat = "yyyy-MM-dd HH:mm"
-        
-        for arrayHour in weather {
-            guard let date = formatter.date(from: arrayHour.hour) else { return }
-            let weatherComponents = Calendar.current.dateComponents([.day, .hour], from: date)
-            let currentComponents = Calendar.current.dateComponents([.day, .hour], from: Date())
-            
-            if weatherComponents.hour ?? 0 >= currentComponents.hour ?? 0 || weatherComponents.day != currentComponents.day {
-                hourlyModel.append(arrayHour)
-            }
-        }
+        self.hourlyModel = weather
         
         collectionView.reloadData()
     }

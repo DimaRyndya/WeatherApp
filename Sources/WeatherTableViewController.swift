@@ -17,19 +17,21 @@ final class WeatherTableViewController: UITableViewController {
         tableView.register(nib, forCellReuseIdentifier: "HourlyWeatherCell")
 
         viewModel.delegate = self
-        viewModel.locationService.configureLocation()
-
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        viewModel.dataIsLoaded()
+        viewModel.configureLocation()
     }
 
     // MARK: - Table view data source
 
+//    override func numberOfSections(in tableView: UITableView) -> Int {
+//        return 2
+//    }
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.dailyWeather.count + 1
+//        if section == 0 {
+//            return 1
+//        }
+
+        return viewModel.dailyWeather.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -44,42 +46,12 @@ final class WeatherTableViewController: UITableViewController {
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "DailyWeatherCell") as! DailyWeatherTableViewCell
-        let weather = viewModel.dailyWeather[indexPath.row-1]
+        let weather = viewModel.dailyWeather[indexPath.row - 1]
 
         cell.configure(with: weather)
         cell.selectionStyle = .none
 
         return cell
-    }
-
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 200))
-        let cityLabel = UILabel(frame: CGRect(x: 10, y: 10, width: view.frame.size.width-20, height: headerView.frame.size.height / 5))
-        let temperatureLabel = UILabel(frame: CGRect(x: 10, y: 15+cityLabel.frame.size.height, width: view.frame.size.width-20, height: headerView.frame.size.height / 3))
-        let summaryLabel = UILabel(frame: CGRect(x: 10, y: 10+temperatureLabel.frame.size.height+cityLabel.frame.size.height, width: view.frame.size.width-20, height: headerView.frame.size.height / 5))
-
-        cityLabel.textAlignment = .center
-        temperatureLabel.textAlignment = .center
-        summaryLabel.textAlignment = .center
-
-        cityLabel.text = viewModel.currentWeather.city
-        cityLabel.font = UIFont(name: "Helvetica-Bold", size: 30)
-
-        temperatureLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 80)
-        temperatureLabel.text = "\(Int(viewModel.currentWeather.temperature))°"
-
-        summaryLabel.text = viewModel.currentWeather.summary
-
-        headerView.addSubview(cityLabel)
-        headerView.addSubview(temperatureLabel)
-        headerView.addSubview(summaryLabel)
-
-        return headerView
-    }
-
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 200
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -89,15 +61,27 @@ final class WeatherTableViewController: UITableViewController {
         }
         return 60
     }
+
+    private func setUpConstraints(for header: WeatherHeaderView) {
+        NSLayoutConstraint.activate([
+            header.widthAnchor.constraint(equalTo: view.widthAnchor),
+            header.heightAnchor.constraint(equalToConstant: 200)
+        ])
+    }
 }
 
-    //MARK: - WeatherViewModel Delegate
+//MARK: - WeatherViewModel Delegate
 
 extension WeatherTableViewController: WeatherViewModelDelegate {
     
-    func updateUI(_ weatherViewModel: WeatherViewModel) {
+    func updateUI() {
+        let nib = UINib(nibName: "WeatherHeaderView", bundle: nil)
+        let header = nib.instantiate(withOwner: self, options: nil).first as! WeatherHeaderView
+        view.addSubview(header)
+        header.translatesAutoresizingMaskIntoConstraints = false
+        setUpConstraints(for: header)
+        header.configure(with: viewModel.currentWeather)
+        tableView.tableHeaderView = header
         tableView.reloadData()
     }
-
-
 }

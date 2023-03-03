@@ -1,19 +1,26 @@
 import Foundation
 import CoreLocation
 
-typealias ResponseResult = ((WeatherRequestResponse)) -> Void
+enum NetworkFailure: Error {
+    case decodeError
+}
+
+typealias ResponseResult = (Result<WeatherRequestResponse, NetworkFailure>) -> Void
 
 final class NetworkService {
 
-    //MARK: Request params
+    // MARK: - Request params
 
     private let baseURL = "http://api.weatherapi.com/v1"
     private let requestURL = "/forecast.json"
     private let apiKey = "b590599a9cde440d930193106232202"
 
-    //MARK: Public
+    // MARK:  - Public
 
-    func requestWeatherForLocation(with latitude: CLLocationDegrees, and longitude: CLLocationDegrees, completionHandler: @escaping ResponseResult) {
+    func requestWeather(
+        latitude: CLLocationDegrees,
+        longitude: CLLocationDegrees,
+        completionHandler: @escaping ResponseResult) {
 
         let baseParams = [
             "key": apiKey,
@@ -21,7 +28,7 @@ final class NetworkService {
             "days": "10"
         ]
 
-        guard var urlComponents = URLComponents(string: baseURL+requestURL) else { return }
+        guard var urlComponents = URLComponents(string: baseURL + requestURL) else { return }
 
         urlComponents.setQueryItems(with: baseParams)
 
@@ -31,16 +38,16 @@ final class NetworkService {
 
         request.httpMethod = "GET"
 
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let data = data, let response = response as? HTTPURLResponse, error == nil {
+        URLSession.shared.dataTask(with: request) { data, response, _ in
+            if let data = data, let response = response as? HTTPURLResponse {
                 print(response.statusCode)
 
                 do {
                     let decoder = JSONDecoder()
                     let reuslt = try decoder.decode(WeatherRequestResponse.self, from: data)
-                    completionHandler(reuslt)
+                    completionHandler(.success(reuslt))
                 } catch {
-                    print(error.localizedDescription)
+                    completionHandler(.failure(NetworkFailure.decodeError))
                 }
 
                 return
