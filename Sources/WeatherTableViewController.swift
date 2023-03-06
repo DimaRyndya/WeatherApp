@@ -5,6 +5,7 @@ final class WeatherTableViewController: UITableViewController {
     //MARK: Properties
 
     var viewModel = WeatherViewModel()
+    private var tableHeaderView: WeatherHeaderView?
 
     //MARK: Lifecycle
 
@@ -15,6 +16,11 @@ final class WeatherTableViewController: UITableViewController {
         tableView.register(nib, forCellReuseIdentifier: "DailyWeatherCell")
         nib = UINib(nibName: "HourlyWeatherTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "HourlyWeatherCell")
+        nib = UINib(nibName: "WeatherHeaderView", bundle: nil)
+        tableHeaderView = nib.instantiate(withOwner: self, options: nil).first as? WeatherHeaderView
+
+        tableHeaderView?.configure(with: viewModel.currentWeather)
+        tableView.tableHeaderView = tableHeaderView
 
         viewModel.delegate = self
         viewModel.configureLocation()
@@ -69,14 +75,34 @@ final class WeatherTableViewController: UITableViewController {
         return "10-days Forecast"
     }
 
-    private func setUpConstraints(for header: WeatherHeaderView) {
-        NSLayoutConstraint.activate([
-            header.widthAnchor.constraint(equalTo: view.widthAnchor),
-//            header.heightAnchor.constraint(equalToConstant: 300),
-//            header.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: 200),
-//            header.topAnchor.constraint(equalTo: tableView.topAnchor)
-        ])
+//    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        if section == 0 {
+//            return 200
+//        }
+//        return 0
+//    }
+
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard section == 0 else { return nil }
+
+//        header.translatesAutoresizingMaskIntoConstraints = false
+//        setUpConstraints(for: header)
+        return nil
     }
+
+//    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        guard section == 0 else { return 0 }
+//        return 200
+//    }
+
+//    private func setUpConstraints(for header: WeatherHeaderView) {
+//        NSLayoutConstraint.activate([
+//            header.widthAnchor.constraint(equalTo: view.widthAnchor),
+////            header.heightAnchor.constraint(equalToConstant: 300),
+////            header.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: 200),
+////            header.topAnchor.constraint(equalTo: tableView.topAnchor)
+//        ])
+//    }
 }
 
 //MARK: - WeatherViewModel Delegate
@@ -84,14 +110,7 @@ final class WeatherTableViewController: UITableViewController {
 extension WeatherTableViewController: WeatherViewModelDelegate {
     
     func updateUI() {
-        let nib = UINib(nibName: "WeatherHeaderView", bundle: nil)
-        let header = nib.instantiate(withOwner: self, options: nil).first as! WeatherHeaderView
-        view.addSubview(header)
-        header.translatesAutoresizingMaskIntoConstraints = false
-        setUpConstraints(for: header)
-        header.configure(with: viewModel.currentWeather)
-        view.addSubview(header)
-        tableView.tableHeaderView = header
+        tableHeaderView?.configure(with: viewModel.currentWeather)
         tableView.reloadData()
     }
 }
