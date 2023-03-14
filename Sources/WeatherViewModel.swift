@@ -17,22 +17,37 @@ final class WeatherViewModel: NSObject {
     
     let weatherService = WeatherService()
     let locationManager = CLLocationManager()
+    let cacheService: CacheService
+
+    init(cacheService: CacheService) {
+        self.cacheService = cacheService
+    }
 
     // MARK: Public
 
     func configureLocation() {
-
-        // Handle if location is not confirmed
-
         locationManager.requestWhenInUseAuthorization()
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
     }
 }
 
-//MARK: - Location Manager Delegate
+// MARK: - Location Manager Delegate
 
 extension WeatherViewModel: CLLocationManagerDelegate {
+
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        switch manager.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
+            configureLocation()
+        case .notDetermined:
+            break
+        case .restricted, .denied:
+            displayLocationError()
+        @unknown default:
+            break
+        }
+    }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if !locations.isEmpty, weatherService.currentLocation == nil {
@@ -48,6 +63,8 @@ extension WeatherViewModel: CLLocationManagerDelegate {
                         self.currentWeather.city = weather.location.city
                         self.currentWeather.temperature = weather.currentWeather.temperature
                         self.currentWeather.summary = weather.currentWeather.currentWeatherDescription.summary
+                        self.cacheService.save(currentWeather: self.currentWeather)
+                        self.cacheService.save(dailyWeather: self.dailyWeather)
 
                         if weather.forecast.daily.count >= 2 {
                             var hourlyWeather: [HourlyWeather] = []
@@ -61,13 +78,40 @@ extension WeatherViewModel: CLLocationManagerDelegate {
 
                             self.hourlyWeather = hourlyWeather
                         }
-
+                        
                         self.delegate?.updateUI()
                     }
                 case .failure(let error):
                     print(error)
                 }
             }
+        } else {
+            if let weather = cacheService.fetchCurrentWeather() {
+                currentWeather = weather
+                delegate?.updateUI()
+            }
+        }
+    }
+
+    // MARK: - Helper methods
+
+    private func displayLocationError() {
+        let alert = UIAlertController(title: "Location Serviced Disabled",
+                                      message: "Please enable your location to present current weather",
+                                      preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { _ in
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }
+
+        alert.addAction(cancelAction)
+        alert.addAction(settingsAction)
+
+        if let windowScene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundInactive }) as? UIWindowScene {
+            let currentWindow = windowScene.windows.first { $0.isKeyWindow }
+            currentWindow?.rootViewController?.present(alert, animated: true, completion: nil)
         }
     }
 }

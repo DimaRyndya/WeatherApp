@@ -30,6 +30,10 @@
 		1D7FC85429AFDDC000C32839 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7FC85329AFDDC000C32839 /* DateHelper.swift */; };
 		1D7FC85729B1281900C32839 /* WeatherHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7FC85629B1281900C32839 /* WeatherHeaderView.swift */; };
 		1D7FC85929B1289200C32839 /* WeatherHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D7FC85829B1289200C32839 /* WeatherHeaderView.xib */; };
+		1D82956229BB932200719F32 /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D82956129BB932200719F32 /* CacheService.swift */; };
+		1D82957529BB93EF00719F32 /* PersistedDailyWeather+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D82956F29BB93EF00719F32 /* PersistedDailyWeather+CoreDataClass.swift */; };
+		1D82957729BB93EF00719F32 /* PersistedCurrentWeather+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D82957129BB93EF00719F32 /* PersistedCurrentWeather+CoreDataClass.swift */; };
+		1D82957929BB93EF00719F32 /* PersistedHourlyWeather+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D82957329BB93EF00719F32 /* PersistedHourlyWeather+CoreDataClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +62,10 @@
 		1D7FC85329AFDDC000C32839 /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		1D7FC85629B1281900C32839 /* WeatherHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherHeaderView.swift; sourceTree = "<group>"; };
 		1D7FC85829B1289200C32839 /* WeatherHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeatherHeaderView.xib; sourceTree = "<group>"; };
+		1D82956129BB932200719F32 /* CacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
+		1D82956F29BB93EF00719F32 /* PersistedDailyWeather+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistedDailyWeather+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		1D82957129BB93EF00719F32 /* PersistedCurrentWeather+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistedCurrentWeather+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		1D82957329BB93EF00719F32 /* PersistedHourlyWeather+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistedHourlyWeather+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +135,9 @@
 		1D7FC82D29A6766000C32839 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				1D82957129BB93EF00719F32 /* PersistedCurrentWeather+CoreDataClass.swift */,
+				1D82956F29BB93EF00719F32 /* PersistedDailyWeather+CoreDataClass.swift */,
+				1D82957329BB93EF00719F32 /* PersistedHourlyWeather+CoreDataClass.swift */,
 				1D7FC81C29A6750F00C32839 /* WeatherApp.xcdatamodeld */,
 			);
 			path = CoreData;
@@ -160,6 +171,7 @@
 			children = (
 				1D7FC84A29A6C61300C32839 /* NetworkService */,
 				1D7FC84229A69A9E00C32839 /* WeatherService.swift */,
+				1D82956129BB932200719F32 /* CacheService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -272,15 +284,19 @@
 				1D7FC82F29A68C9C00C32839 /* WeatherTableViewController.swift in Sources */,
 				1D7FC83F29A698AA00C32839 /* HourlyWeatherTableViewCell.swift in Sources */,
 				1D7FC85729B1281900C32839 /* WeatherHeaderView.swift in Sources */,
+				1D82957929BB93EF00719F32 /* PersistedHourlyWeather+CoreDataClass.swift in Sources */,
+				1D82957729BB93EF00719F32 /* PersistedCurrentWeather+CoreDataClass.swift in Sources */,
 				1D7FC83A29A697BA00C32839 /* DailyWeatherTableViewCell.swift in Sources */,
 				1D7FC84C29A6C63700C32839 /* WetherRequestResponse.swift in Sources */,
 				1D7FC81E29A6750F00C32839 /* WeatherApp.xcdatamodeld in Sources */,
+				1D82957529BB93EF00719F32 /* PersistedDailyWeather+CoreDataClass.swift in Sources */,
 				1D7FC81429A6750F00C32839 /* AppDelegate.swift in Sources */,
 				1D7FC83629A68FF600C32839 /* CurrentWeatherModel.swift in Sources */,
 				1D7FC84329A69A9E00C32839 /* WeatherService.swift in Sources */,
 				1D7FC81629A6750F00C32839 /* SceneDelegate.swift in Sources */,
 				1D7FC84E29A9F39C00C32839 /* UIImageViewExtension.swift in Sources */,
 				1D7FC84929A6AE2700C32839 /* URLComponentsExtension.swift in Sources */,
+				1D82956229BB932200719F32 /* CacheService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

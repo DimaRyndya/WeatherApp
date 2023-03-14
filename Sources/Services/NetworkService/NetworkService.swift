@@ -13,7 +13,7 @@ final class NetworkService {
 
     private let baseURL = "http://api.weatherapi.com/v1"
     private let requestURL = "/forecast.json"
-    private let apiKey = "b590599a9cde440d930193106232202"
+    private let apiKey = "05493caded524f2a962161419231003"
 
     // MARK:  - Public
 
