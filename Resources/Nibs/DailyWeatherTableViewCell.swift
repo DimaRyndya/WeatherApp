@@ -2,14 +2,14 @@ import UIKit
 
 final class DailyWeatherTableViewCell: UITableViewCell {
 
-    //MARK: Outlets
+    // MARK: Outlets
 
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var iconLabel: UIImageView!
     @IBOutlet weak var minTemperatureLabel: UILabel!
     @IBOutlet weak var maxTemperatureLabel: UILabel!
 
-    //MARK: Lifecycle
+    // MARK: Lifecycle
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -18,12 +18,12 @@ final class DailyWeatherTableViewCell: UITableViewCell {
         maxTemperatureLabel.font = UIFont(name: "Helvetica", size: 18)
     }
 
-    //MARK: - Public
+    // MARK: - Public
 
-    func configure(with weather: DailyWeather) {
-        dayLabel.text = DateHelper.getDay(from: weather.date)
-        minTemperatureLabel.text = "\(Int(weather.dayDetail.minTemp))°"
-        maxTemperatureLabel.text = "\(Int(weather.dayDetail.maxTemp))°"
-        iconLabel.loadImage(url: weather.dayDetail.condition.weatherImage)
+    func configure(with weather: DailyWeatherModel) {
+        dayLabel.text = DateHelper.getDay(from: weather.day)
+        minTemperatureLabel.text = "\(Int(weather.minTemp))°"
+        maxTemperatureLabel.text = "\(Int(weather.maxTemp))°"
+        iconLabel.loadImage(url: weather.weatherImage)
     }
 }

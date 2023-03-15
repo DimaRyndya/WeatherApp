@@ -13,10 +13,10 @@ final class CacheService {
     private lazy var persistedDailyWeather = PersistedDailyWeather(context: managedObjectContext)
     private lazy var persistedHourlyWeather = PersistedHourlyWeather(context: managedObjectContext)
 
-    func save(dailyWeather: [DailyWeather]) {
-        guard let fetchedWeather = try? managedObjectContext.fetch(dailyWeatherFetchRequest) else { return }
+    func save(dailyWeather: [DailyWeatherModel]) {
+        guard var fetchedWeather = try? managedObjectContext.fetch(dailyWeatherFetchRequest) else { return }
         if fetchedWeather.isEmpty {
-            
+            fetchedWeather = dailyWeather.map { PersistedDailyWeather(dailyWeather: $0) }
         }
 
         do {
@@ -59,12 +59,13 @@ final class CacheService {
         return currentWeather
     }
 
-//    func fetchDailyWeather() -> [DailyWeather]? {
-//        guard let _ = try? managedObjectContext.fetch(dailyWeatherFetchRequest) else { return nil }
-//        var dailyWeather: [DailyWeather] = []
-//
-//        return dailyWeather
-//    }
+    func fetchDailyWeather() -> [DailyWeatherModel]? {
+        guard let fetchedDailyWaether = try? managedObjectContext.fetch(dailyWeatherFetchRequest) else { return nil }
+        var dailyWeather: [DailyWeatherModel] = []
+        dailyWeather = fetchedDailyWaether.map { DailyWeatherModel(persistedDailyWeather: $0) }
+
+        return dailyWeather
+    }
 
     // MARK: - Core Data stack
 

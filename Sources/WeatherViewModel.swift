@@ -10,7 +10,7 @@ final class WeatherViewModel: NSObject {
     // MARK: - Properties
     
     var currentWeather = CurrentWeatherModel()
-    var dailyWeather: [DailyWeather] = []
+    var dailyWeather: [DailyWeatherModel] = []
     var hourlyWeather: [HourlyWeather] = []
     
     weak var delegate: WeatherViewModelDelegate?
@@ -59,7 +59,11 @@ extension WeatherViewModel: CLLocationManagerDelegate {
                 switch response {
                 case .success(let weather):
                     DispatchQueue.main.async {
-                        self.dailyWeather = weather.forecast.daily
+                        self.dailyWeather = weather.forecast.daily.map { DailyWeatherModel(
+                            day: $0.date,
+                            minTemp: $0.dayDetail.minTemp,
+                            maxTemp: $0.dayDetail.maxTemp)
+                        }
                         self.currentWeather.city = weather.location.city
                         self.currentWeather.temperature = weather.currentWeather.temperature
                         self.currentWeather.summary = weather.currentWeather.currentWeatherDescription.summary
@@ -86,8 +90,9 @@ extension WeatherViewModel: CLLocationManagerDelegate {
                 }
             }
         } else {
-            if let weather = cacheService.fetchCurrentWeather() {
-                currentWeather = weather
+            if let current = cacheService.fetchCurrentWeather(), let daily = cacheService.fetchDailyWeather() {
+                currentWeather = current
+                dailyWeather = daily
                 delegate?.updateUI()
             }
         }

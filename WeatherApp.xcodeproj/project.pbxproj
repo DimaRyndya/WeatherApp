@@ -34,6 +34,7 @@
 		1D82957529BB93EF00719F32 /* PersistedDailyWeather+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D82956F29BB93EF00719F32 /* PersistedDailyWeather+CoreDataClass.swift */; };
 		1D82957729BB93EF00719F32 /* PersistedCurrentWeather+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D82957129BB93EF00719F32 /* PersistedCurrentWeather+CoreDataClass.swift */; };
 		1D82957929BB93EF00719F32 /* PersistedHourlyWeather+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D82957329BB93EF00719F32 /* PersistedHourlyWeather+CoreDataClass.swift */; };
+		1D82957C29C1173600719F32 /* DailyWeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D82957B29C1173600719F32 /* DailyWeatherModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,7 @@
 		1D82956F29BB93EF00719F32 /* PersistedDailyWeather+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistedDailyWeather+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		1D82957129BB93EF00719F32 /* PersistedCurrentWeather+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistedCurrentWeather+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		1D82957329BB93EF00719F32 /* PersistedHourlyWeather+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PersistedHourlyWeather+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		1D82957B29C1173600719F32 /* DailyWeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				1D7FC83529A68FF600C32839 /* CurrentWeatherModel.swift */,
+				1D82957B29C1173600719F32 /* DailyWeatherModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 				1D7FC81E29A6750F00C32839 /* WeatherApp.xcdatamodeld in Sources */,
 				1D82957529BB93EF00719F32 /* PersistedDailyWeather+CoreDataClass.swift in Sources */,
 				1D7FC81429A6750F00C32839 /* AppDelegate.swift in Sources */,
+				1D82957C29C1173600719F32 /* DailyWeatherModel.swift in Sources */,
 				1D7FC83629A68FF600C32839 /* CurrentWeatherModel.swift in Sources */,
 				1D7FC84329A69A9E00C32839 /* WeatherService.swift in Sources */,
 				1D7FC81629A6750F00C32839 /* SceneDelegate.swift in Sources */,

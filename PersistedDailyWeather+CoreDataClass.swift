@@ -3,7 +3,12 @@ import CoreData
 
 @objc(PersistedDailyWeather)
 public class PersistedDailyWeather: NSManagedObject {
-
+    convenience init(dailyWeather: DailyWeatherModel) {
+        self.init()
+        self.day =  dailyWeather.day
+        self.minTemp = dailyWeather.minTemp
+        self.maxTemp = dailyWeather.maxTemp
+    }
 }
 
 extension PersistedDailyWeather: Identifiable {
