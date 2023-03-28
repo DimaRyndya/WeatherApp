@@ -92,11 +92,8 @@
 			children = (
 				1D40F44729CF5DF300FA7762 /* UIBuilder.swift */,
 				1D7C07F029D34E6C004CA107 /* SharedServices.swift */,
-				1D7FC83429A68FE500C32839 /* Models */,
-				1D7FC84129A69A7900C32839 /* Services */,
 				1D7FC85529AFE05400C32839 /* Helpers */,
 				1D7FC84729A6AE1300C32839 /* Extensions */,
-				1D7FC82D29A6766000C32839 /* CoreData */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -129,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				1D7C07F429D35171004CA107 /* View */,
+				1D7FC83429A68FE500C32839 /* Model */,
 				1D7C07F629D35188004CA107 /* ViewModel */,
 			);
 			path = WeatherScreen;
@@ -137,7 +135,7 @@
 		1D7C07F429D35171004CA107 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1D8AFAE229D3539C0004D4EE /* HeaderView */,
+				1D8AFAE229D3539C0004D4EE /* Header */,
 				1D8AFADE29D353220004D4EE /* Cells */,
 				1D7C07F529D3517A004CA107 /* ViewController */,
 			);
@@ -183,6 +181,8 @@
 			children = (
 				1D7FC82C29A6764A00C32839 /* App */,
 				1D40F44629CF5DDD00FA7762 /* Common */,
+				1D7FC82D29A6766000C32839 /* Persistence */,
+				1D7FC84129A69A7900C32839 /* Services */,
 				1D7C07F229D35141004CA107 /* Features */,
 			);
 			path = Sources;
@@ -207,7 +207,7 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		1D7FC82D29A6766000C32839 /* CoreData */ = {
+		1D7FC82D29A6766000C32839 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
 				1D82957129BB93EF00719F32 /* PersistedCurrentWeather+CoreDataClass.swift */,
@@ -215,17 +215,17 @@
 				1D82957329BB93EF00719F32 /* PersistedHourlyWeather+CoreDataClass.swift */,
 				1D7FC81C29A6750F00C32839 /* WeatherApp.xcdatamodeld */,
 			);
-			path = CoreData;
+			path = Persistence;
 			sourceTree = "<group>";
 		};
-		1D7FC83429A68FE500C32839 /* Models */ = {
+		1D7FC83429A68FE500C32839 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				1D7FC83529A68FF600C32839 /* CurrentWeatherModel.swift */,
 				1D82957B29C1173600719F32 /* DailyWeatherModel.swift */,
 				1D40F44F29D2279D00FA7762 /* HourlyWeatherModel.swift */,
 			);
-			path = Models;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		1D7FC84129A69A7900C32839 /* Services */ = {
@@ -293,13 +293,13 @@
 			path = HourlyWeatherCell;
 			sourceTree = "<group>";
 		};
-		1D8AFAE229D3539C0004D4EE /* HeaderView */ = {
+		1D8AFAE229D3539C0004D4EE /* Header */ = {
 			isa = PBXGroup;
 			children = (
 				1D7FC85629B1281900C32839 /* WeatherHeaderView.swift */,
 				1D7FC85829B1289200C32839 /* WeatherHeaderView.xib */,
 			);
-			path = HeaderView;
+			path = Header;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

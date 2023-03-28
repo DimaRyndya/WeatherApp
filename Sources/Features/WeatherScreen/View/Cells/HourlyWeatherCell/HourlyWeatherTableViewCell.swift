@@ -4,7 +4,7 @@ final class HourlyWeatherTableViewCell: UITableViewCell, UICollectionViewDelegat
 
     //MARK: - Outlets
     
-    @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet private weak var collectionView: UICollectionView!
 
     // MARK: Properties
     
@@ -46,15 +46,3 @@ final class HourlyWeatherTableViewCell: UITableViewCell, UICollectionViewDelegat
         collectionView.reloadData()
     }
 }
-
-//extension HourlyWeatherTableViewCell: WeatherViewModelDelegate {
-//    func updateUI() {
-//        collectionView.reloadData()
-//    }
-//
-//    func displayLocationError() {
-//        print("Error")
-//    }
-//
-//
-//}

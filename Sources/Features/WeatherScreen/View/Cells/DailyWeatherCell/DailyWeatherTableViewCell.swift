@@ -1,25 +1,16 @@
 import UIKit
 
 final class DailyWeatherTableViewCell: UITableViewCell {
-
+    
     // MARK: Outlets
-
-    @IBOutlet weak var dayLabel: UILabel!
-    @IBOutlet weak var iconLabel: UIImageView!
-    @IBOutlet weak var minTemperatureLabel: UILabel!
-    @IBOutlet weak var maxTemperatureLabel: UILabel!
-
-    // MARK: Lifecycle
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        dayLabel.font = UIFont(name: "Helvetica", size: 18)
-        minTemperatureLabel.font = UIFont(name: "Helvetica", size: 18)
-        maxTemperatureLabel.font = UIFont(name: "Helvetica", size: 18)
-    }
-
+    
+    @IBOutlet private weak var dayLabel: UILabel!
+    @IBOutlet private weak var iconLabel: UIImageView!
+    @IBOutlet private weak var minTemperatureLabel: UILabel!
+    @IBOutlet private weak var maxTemperatureLabel: UILabel!
+    
     // MARK: - Public
-
+    
     func configure(with weather: DailyWeatherModel) {
         dayLabel.text = DateHelper.getDay(from: weather.day)
         minTemperatureLabel.text = "\(Int(weather.minTemp))°"

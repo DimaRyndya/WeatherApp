@@ -10,26 +10,31 @@ final class CacheService {
     private let hourlyWeatherFetchRequest = NSFetchRequest<PersistedHourlyWeather>(entityName: "PersistedHourlyWeather")
 
     private lazy var managedObjectContext = persistentContainer.viewContext
-    private lazy var persistedHourlyWeather = PersistedHourlyWeather(context: managedObjectContext)
+
+    // MARK: - Core Data stack
+
+    lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "WeatherApp")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        return container
+    }()
 
     // MARK: - Public
 
     func save(currentWeather: CurrentWeatherModel) {
         guard let fetchedWeather = try? managedObjectContext.fetch(currentWeatherFetchRequest) else { return }
 
-        if fetchedWeather.isEmpty {
-            let persistedCurrentWeather = PersistedCurrentWeather(context: managedObjectContext)
+        let persistedCurrentWeather = fetchedWeather.isEmpty
+        ? PersistedCurrentWeather(context: managedObjectContext)
+        : fetchedWeather.first ?? PersistedCurrentWeather()
 
-            persistedCurrentWeather.city = currentWeather.city
-            persistedCurrentWeather.temperature = currentWeather.temperature
-            persistedCurrentWeather.summary = currentWeather.summary
-        } else {
-            if let persistedCurrentWeather = fetchedWeather.first {
-                persistedCurrentWeather.city = currentWeather.city
-                persistedCurrentWeather.temperature = currentWeather.temperature
-                persistedCurrentWeather.summary = currentWeather.summary
-            }
-        }
+        persistedCurrentWeather.city = currentWeather.city
+        persistedCurrentWeather.temperature = currentWeather.temperature
+        persistedCurrentWeather.summary = currentWeather.summary
 
         saveContext()
     }
@@ -74,7 +79,6 @@ final class CacheService {
         saveContext()
     }
 
-
     func fetchCurrentWeather() -> CurrentWeatherModel {
         guard let fetchedWeather = try? managedObjectContext.fetch(currentWeatherFetchRequest).first else { return CurrentWeatherModel() }
 
@@ -95,9 +99,7 @@ final class CacheService {
         guard let fetchedDailyWaether = try? managedObjectContext.fetch(dailyWeatherFetchRequest) else { return [] }
 
         var dailyWeather: [DailyWeatherModel] = []
-
         dailyWeather = fetchedDailyWaether.map { DailyWeatherModel(persistedDailyWeather: $0) }
-
         return dailyWeather
     }
 
@@ -109,23 +111,9 @@ final class CacheService {
         guard let fetchedDailyWaether = try? managedObjectContext.fetch(hourlyWeatherFetchRequest) else { return [] }
 
         var hourlyWeather: [HourlyWeatherModel] = []
-
         hourlyWeather = fetchedDailyWaether.map { HourlyWeatherModel(persistedHourlyWeather: $0) }
-
         return hourlyWeather
     }
-
-    // MARK: - Core Data stack
-
-    lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "WeatherApp")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        return container
-    }()
 
     // MARK: - Core Data Saving support
 

@@ -1,19 +1,13 @@
 import UIKit
 
 final class HourlyWeatherCollectionViewCell: UICollectionViewCell {
-
+    
     //MARK: - Outlets
     
-    @IBOutlet var hourLabel: UILabel!
-    @IBOutlet var imageLabel: UIImageView!
-    @IBOutlet var temperatureLabel: UILabel!
-
-    //MARK: - Lifecycle
+    @IBOutlet private weak var hourLabel: UILabel!
+    @IBOutlet private weak var imageLabel: UIImageView!
+    @IBOutlet private weak var temperatureLabel: UILabel!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
     // MARK: - Public
     
     func configure(with weather: HourlyWeatherModel) {
