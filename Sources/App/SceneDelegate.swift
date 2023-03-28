@@ -6,7 +6,6 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     private let uiBuilder = UIBuilder()
-    private let sharedService = SharedServices()
     
     // MARK: - Application lifecycle
     
@@ -15,7 +14,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let window = UIWindow(windowScene: windowScene)
         
-        window.rootViewController = uiBuilder.buildRootVC(cacheService: sharedService.cacheService, weatherService: sharedService.weatherService)
+        window.rootViewController = uiBuilder.buildRootVC(cacheService: SharedServices.cacheService, weatherService: SharedServices.weatherService)
         self.window = window
         window.makeKeyAndVisible()
     }

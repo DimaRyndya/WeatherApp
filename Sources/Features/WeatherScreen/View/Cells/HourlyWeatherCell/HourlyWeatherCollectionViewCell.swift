@@ -7,6 +7,11 @@ final class HourlyWeatherCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var hourLabel: UILabel!
     @IBOutlet private weak var imageLabel: UIImageView!
     @IBOutlet private weak var temperatureLabel: UILabel!
+
+    // MARK: - Properties
+
+    static let nibName = "HourlyWeatherCollectionViewCell"
+    static let identifier = "HourlyCollectionViewCell"
     
     // MARK: - Public
     

@@ -8,6 +8,11 @@ final class DailyWeatherTableViewCell: UITableViewCell {
     @IBOutlet private weak var iconLabel: UIImageView!
     @IBOutlet private weak var minTemperatureLabel: UILabel!
     @IBOutlet private weak var maxTemperatureLabel: UILabel!
+
+    // MARK: - Properties
+
+    static let nibName = "DailyWeatherTableViewCell"
+    static let identifier = "DailyWeatherCell"
     
     // MARK: - Public
     

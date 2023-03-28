@@ -12,11 +12,11 @@ final class WeatherTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        var nib = UINib(nibName: "DailyWeatherTableViewCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "DailyWeatherCell")
-        nib = UINib(nibName: "HourlyWeatherTableViewCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "HourlyWeatherCell")
-        nib = UINib(nibName: "WeatherHeaderView", bundle: nil)
+        var nib = UINib(nibName: DailyWeatherTableViewCell.nibName, bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: DailyWeatherTableViewCell.identifier)
+        nib = UINib(nibName: HourlyWeatherTableViewCell.nibName, bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: HourlyWeatherTableViewCell.identifier)
+        nib = UINib(nibName: WeatherHeaderView.nibName, bundle: nil)
         tableHeaderView = nib.instantiate(withOwner: self, options: nil).first as? WeatherHeaderView
 
         tableHeaderView?.configure(with: viewModel.currentWeather)
@@ -47,7 +47,7 @@ final class WeatherTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "HourlyWeatherCell") as! HourlyWeatherTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: HourlyWeatherTableViewCell.identifier) as! HourlyWeatherTableViewCell
 
             cell.configure(with: viewModel.hourlyWeather)
             cell.selectionStyle = .none
@@ -55,7 +55,7 @@ final class WeatherTableViewController: UITableViewController {
             return cell
         }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "DailyWeatherCell") as! DailyWeatherTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: DailyWeatherTableViewCell.identifier) as! DailyWeatherTableViewCell
         let weather = viewModel.dailyWeather[indexPath.row]
 
         cell.configure(with: weather)

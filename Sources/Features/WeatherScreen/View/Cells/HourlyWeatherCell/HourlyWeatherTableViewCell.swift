@@ -10,14 +10,17 @@ final class HourlyWeatherTableViewCell: UITableViewCell, UICollectionViewDelegat
     
     private var hourlyModel: [HourlyWeatherModel] = []
 
+    static let nibName = "HourlyWeatherTableViewCell"
+    static let identifier = "HourlyWeatherCell"
+
     // MARK: - Lifecycle
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        let nib = UINib(nibName: "HourlyWeatherCollectionViewCell", bundle: nil)
+        let nib = UINib(nibName: HourlyWeatherCollectionViewCell.nibName, bundle: nil)
         
-        collectionView.register(nib, forCellWithReuseIdentifier: "HourlyCollectionViewCell")
+        collectionView.register(nib, forCellWithReuseIdentifier: HourlyWeatherCollectionViewCell.nibName)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.contentInsetAdjustmentBehavior = .never
@@ -30,7 +33,7 @@ final class HourlyWeatherTableViewCell: UITableViewCell, UICollectionViewDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HourlyCollectionViewCell", for: indexPath) as! HourlyWeatherCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HourlyWeatherCollectionViewCell.identifier, for: indexPath) as! HourlyWeatherCollectionViewCell
         
         cell.configure(with: hourlyModel[indexPath.row])
         return cell
