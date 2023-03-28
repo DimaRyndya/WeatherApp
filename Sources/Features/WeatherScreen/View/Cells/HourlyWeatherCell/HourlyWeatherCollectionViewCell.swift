@@ -16,10 +16,10 @@ final class HourlyWeatherCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Public
     
-    func configure(with weather: HourlyWeather) {
+    func configure(with weather: HourlyWeatherModel) {
         hourLabel.text = DateHelper.getTime(from: weather.hour)
         imageLabel.contentMode = .scaleAspectFit
-        imageLabel.loadImage(url: weather.condition.weatherImage)
+        imageLabel.loadImage(url: weather.image)
         temperatureLabel.text = "\(Int(weather.temperature))°"
     }
 }

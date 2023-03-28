@@ -22,8 +22,12 @@ final class WeatherTableViewController: UITableViewController {
         tableHeaderView?.configure(with: viewModel.currentWeather)
         tableView.tableHeaderView = tableHeaderView
 
-        viewModel.delegate = self
-        viewModel.configureLocation()
+        viewModel.getWeather()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.startMonitoring()
     }
 
     // MARK: - Table view data source
@@ -82,12 +86,43 @@ final class WeatherTableViewController: UITableViewController {
     }
 }
 
-//MARK: - WeatherViewModel Delegate
+//MARK: - Weather ViewModel Delegate
 
 extension WeatherTableViewController: WeatherViewModelDelegate {
     
     func updateUI() {
         tableHeaderView?.configure(with: viewModel.currentWeather)
         tableView.reloadData()
+    }
+
+    func displayLocationError() {
+        let alert = UIAlertController(title: "Location Serviced Disabled",
+                                      message: "Please enable your location to present current weather",
+                                      preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { [weak self] _ in
+            guard let self else { return }
+            
+            self.viewModel.openSystemSettings()
+        }
+
+        alert.addAction(cancelAction)
+        alert.addAction(settingsAction)
+
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func displayInternetConnectionError() {
+        let alert = UIAlertController(title: "Internet Connection Error", message: "Unable to connect. Please check your internet connection.", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default)
+        let retryAction = UIAlertAction(title: "Settings", style: .default) { [weak self] _ in
+            guard let self else { return }
+
+            self.viewModel.openSystemSettings()
+        }
+
+        alert.addAction(cancelAction)
+        alert.addAction(retryAction)
+        self.present(alert, animated: true, completion: nil)
     }
 }

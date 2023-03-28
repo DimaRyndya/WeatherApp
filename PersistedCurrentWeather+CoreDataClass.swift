@@ -15,5 +15,4 @@ extension PersistedCurrentWeather: Identifiable {
     @NSManaged public var city: String
     @NSManaged public var temperature: Float
     @NSManaged public var summary: String
-
 }

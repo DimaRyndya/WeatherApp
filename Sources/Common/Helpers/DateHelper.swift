@@ -2,10 +2,14 @@ import Foundation
 
 final class DateHelper {
 
+    // MARK: - Properties
+
     private static var dayFormatter: DateFormatter = {
         let formatter = DateFormatter()
         return formatter
     }()
+
+    // MARK: - Static public methods
 
     static func getDay(from dateString: String) -> String {
         let now = Date()

@@ -8,7 +8,7 @@ final class HourlyWeatherTableViewCell: UITableViewCell, UICollectionViewDelegat
 
     // MARK: Properties
     
-    private var hourlyModel: [HourlyWeather] = []
+    private var hourlyModel: [HourlyWeatherModel] = []
 
     // MARK: - Lifecycle
     
@@ -40,9 +40,21 @@ final class HourlyWeatherTableViewCell: UITableViewCell, UICollectionViewDelegat
         return CGSize(width: 50, height: 100)
     }
     
-    func configure(with weather: [HourlyWeather]) {
+    func configure(with weather: [HourlyWeatherModel]) {
         self.hourlyModel = weather
         
         collectionView.reloadData()
     }
 }
+
+//extension HourlyWeatherTableViewCell: WeatherViewModelDelegate {
+//    func updateUI() {
+//        collectionView.reloadData()
+//    }
+//
+//    func displayLocationError() {
+//        print("Error")
+//    }
+//
+//
+//}

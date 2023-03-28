@@ -1,7 +1,6 @@
 import UIKit
 import CoreLocation
 
-
 final class WeatherService {
 
     //MARK: - Properties

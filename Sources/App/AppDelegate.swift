@@ -4,14 +4,6 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let applicationDocumentsDirectory: URL = {
-          let paths = FileManager.default.urls(
-            for: .documentDirectory,
-            in: .userDomainMask)
-          return paths[0]
-        }()
-         print(applicationDocumentsDirectory)
-
         return true
     }
 
@@ -24,4 +16,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
     }
 }
-
